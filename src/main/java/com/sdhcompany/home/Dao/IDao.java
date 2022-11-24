@@ -1,6 +1,6 @@
 package com.sdhcompany.home.Dao;
 
-import com.rubato.home.dto.RMemberDto;
+
 import com.sdhcompany.home.Dto.MemberDto;
 
 public interface IDao {
