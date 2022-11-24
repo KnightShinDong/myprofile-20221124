@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+<mapper namespace="com.sdhcompany.home.Dao.IDao">
+	<insert id="memberJoinDao">
+		INSERT INTO profile_member(mid,mpw,mname,memail) VALUES (#{param1},#{param2},#{param3},#{param4}) 
+	</insert>
+	<select id="checkIdDao" resultType="com.sdhcompany.home.Dto.MemberDto">
+		SELECT COUNT(*) FROM profile_member WHERE mid=#{param1}
+	</select>
+	<select id="loginOkDao" resultType="com.sdhcompany.home.Dto.MemberDto">
+		SELECT COUNT(*) FROM profile_member WHERE mid=#{param1} and mpw=#{param2}
+	</select>
+	<select id="memberNameDaoo" resultType="com.sdhcompany.home.Dto.MemberDto">
+		SELECT * FROM profile_member where mid=#{param1}
+	</select>
+</mapper>

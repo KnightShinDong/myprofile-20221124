@@ -1,0 +1,52 @@
+@charset "UTF-8";
+
+body{
+	margin:0;
+	padding:0;
+	
+}
+
+span.title01{
+	font-size: 70px;
+	color: #557153;
+	font-family: "휴먼둥근헤드라인";
+	font-weight: bold;
+}
+
+span.title02{
+	
+	font-size: 30px;
+	color: #AA8B56;
+	font-family: "휴먼둥근헤드라인";
+	font-weight: normal;
+}
+
+span.title03{
+	
+	font-size: 60px;
+	color: #ffffff;
+	font-family: "휴먼둥근헤드라인";
+	font-weight: normal;
+}
+span.title04{
+	
+	font-size: 40px;
+	color: #F0EBCE;
+	font-family: "휴먼둥근헤드라인";
+	font-weight: normal;
+}
+
+td.skillbox {
+	width: 40%;
+	background-color: #7D8F69;
+}
+
+td.picbox {
+	text-align: center;
+	background-color: #A9AF7E;
+}
+
+td.titlebox {
+	text-align: center;
+	
+}
