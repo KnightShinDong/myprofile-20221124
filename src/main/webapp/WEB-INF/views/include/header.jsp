@@ -15,7 +15,22 @@
 	%>
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 		<tr class="headline01">
-			<td width="65%" class="menu01">&nbsp;</td>
+			<td width="65%" class="menu001">
+			<%
+			 if(sessionId == null){
+			%>
+				guest님 입장중
+			<%
+			} else {
+			%>
+			<%=sessionName %>님 입장중	
+			<%
+			}
+			%>
+			
+			</td>
+			<td width="5%" class="menu01">
+			
 			<td width="5%" class="menu01"><a href="index">HOME</a></td>
 			<td width="5%" class="menu01">
 			<% 

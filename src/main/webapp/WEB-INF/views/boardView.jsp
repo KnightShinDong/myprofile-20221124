@@ -33,41 +33,50 @@
 						<td class="content">
 						<center>
 							<table border="0" cellspacing="0" cellpadding="10">
-								<form action="questionOk" method="post" name="board_frm">
+								
 									<tr>
 										<td><span class="content_text01">MEMBER ID </span> </td>
-										<td><input class="input_type01" type="text" name="qid" value="${memberId }" readonly="readonly"> </td>
+										<td><input class="input_type01" type="text" name="qid" value="${Qdto.qid }" readonly="readonly"> </td>
 									</tr>
 									<tr>
 										<td><span class="content_text01">NAME</span></td>
-										<%
-											if(sessionId ==null){
-										%>
-											<td><input class="input_type01" type="text" name="qname" value="GUEST" readonly="readonly"> </td>
-										<%
-											}else {
-										%>
-										
-										<td><input class="input_type01" type="text" name="qname" value="<%=sessionName %>" readonly="readonly"> </td>
-									    <%
-											}
-									     %>
+										<td><input class="input_type01" type="text" name="qname" value="${Qdto.qname }" readonly="readonly"> </td>
 									</tr>
 									<tr>
 										<td><span class="content_text01">QUESTION </span></td>
-										<td><textArea class=""textarea_type01" rows="10" cols="35" name="qcontent" ></textArea></td>
+										<td><textArea class=""textarea_type01" rows="10" cols="35" name="qcontent" readonly="readonly">${Qdto.qcontent }</textArea></td>
 									</tr>
 									<tr>
 										<td><span class="content_text01">E-MEMAIL </span></td>
-										<td><input class="input_type01" type="text" name="qemail" > </td>
+										<td><input class="input_type01" type="text" name="qemail" value="${Qdto.qemail }" readonly="readonly"> </td>
 									</tr>
 									<tr>
 										<td colspan="2">
-											<input class="button_type01" type="button" value="질문하기" onclick="boardCheck()">&nbsp;&nbsp;
+										<% 
+											String boardId = (String)request.getAttribute("qid");
+										
+											if(boardId.equals("GUEST")) { //로그인 안됨
+										%>
+											<input class="button_type01" type="button" value="수정" onclick="script:window.location='questionModify?qnum=${Qdto.qnum}'">&nbsp;
+											<input class="button_type01" type="button" value="삭제" onclick="script:window.location='questionDelete?qnum=${Qdto.qnum}'">&nbsp;
 											<input class="button_type01" type="button" value="글목록" onclick="script:window.location='questionList'">
+										<%
+											} else if((sessionId != null) && (sessionId.equals(boardId))) {
+										%>		
+											<input class="button_type01" type="button" value="수정" onclick="script:window.location='questionModify?qnum=${Qdto.qnum}'">&nbsp;
+											<input class="button_type01" type="button" value="삭제" onclick="script:window.location='questionDelete?qnum=${Qdto.qnum}'">&nbsp;
+											<input class="button_type01" type="button" value="글목록" onclick="script:window.location='questionList'">
+										<% 
+											} else {
+										%>
+											<input class="button_type01" type="button" value="글목록" onclick="script:window.location='questionList'">
+										<%
+											}
+										%>
+										
 										</td>
 									</tr>
-								</form>
+								
 							</table>
 							</center>
 						</td>

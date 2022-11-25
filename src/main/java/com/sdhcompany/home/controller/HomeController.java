@@ -1,5 +1,7 @@
 package com.sdhcompany.home.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.sdhcompany.home.Dao.IDao;
 import com.sdhcompany.home.Dto.MemberDto;
+import com.sdhcompany.home.Dto.QBoardDto;
 
 import oracle.net.aso.m;
 
@@ -67,11 +70,7 @@ public class HomeController {
 		
 		return "question";
 	}
-	@RequestMapping(value = "/list")
-	public String list() {
-		
-		return "list";
-	}
+
 	@RequestMapping(value = "/joinOk")
 	public String joinOk(HttpServletRequest request,HttpSession session,Model model) {
 		
@@ -114,6 +113,12 @@ public class HomeController {
 		
 		if(checkIdPwFlag==1) { //로그인실행
 			session.setAttribute("memberId", mid);
+			
+			MemberDto dto =  dao.getMemberInfoDao(mid);
+			String mname = dto.getMname();
+			session.setAttribute("memberName", mname);
+			
+			
 			MemberDto memberDto= dao.getMemberInfoDao(mid);
 			
 			model.addAttribute("memberDto", memberDto);
@@ -164,5 +169,82 @@ public class HomeController {
 		
 		return "memberModifyOk";
 		
+	}
+	
+	@RequestMapping(value = "questionOk")
+	public String questionOk(HttpServletRequest request, Model model) {
+		
+		String qid = request.getParameter("qid");
+		String qname = request.getParameter("qname");
+		String qcontent = request.getParameter("qcontent");
+		String qemail = request.getParameter("qemail");
+		
+		IDao dao = sqlSession.getMapper(IDao.class);
+		
+		dao.writeQuestionDao(qid, qname, qcontent, qemail);
+		
+		
+		return "redirect:questionList";
+	}
+	
+	@RequestMapping(value = "questionList")
+	public String list(HttpServletRequest request, Model model) {
+		
+		IDao dao = sqlSession.getMapper(IDao.class);
+		
+		ArrayList<QBoardDto> boardDtos =  dao.boardListDao();
+		
+		model.addAttribute("boardDtos", boardDtos);
+		
+		
+		return "questionList";
+	}
+	
+	@RequestMapping(value = "boardView")
+	public String boardView(HttpServletRequest request,Model model) {
+		
+		IDao dao = sqlSession.getMapper(IDao.class);
+		
+		String qnum =request.getParameter("qnum");
+		
+		QBoardDto Qdto = dao.boardViewDao(qnum);
+		
+		model.addAttribute("Qdto", Qdto);
+		model.addAttribute("qid", Qdto.getQid());
+		return "boardView";
+	}
+	
+	@RequestMapping(value = "questionModify")
+	public String questionModify(HttpServletRequest request, Model model) {
+		IDao dao = sqlSession.getMapper(IDao.class);
+		String qnum =request.getParameter("qnum");
+		
+		QBoardDto Qdto = dao.boardViewDao(qnum);
+		
+		model.addAttribute("Qdto", Qdto);
+		
+		
+		return "questionModify";
+	}
+	
+	@RequestMapping(value = "/questionModifyOk")
+	public String questionModifyOk(HttpServletRequest request, Model model) {
+		IDao dao = sqlSession.getMapper(IDao.class);
+		String qnum = request.getParameter("qnum");
+		String qcontent = request.getParameter("qcontent");
+		
+		dao.modifyDao(qnum, qcontent);
+		
+		return "redirect:questionList";
+	}
+	@RequestMapping(value = "/questionDelete")
+	public String questionDelete(HttpServletRequest request) {
+		IDao dao = sqlSession.getMapper(IDao.class);
+		String qnum = request.getParameter("qnum");
+		
+		
+		dao.deletedao(qnum);
+		
+		return "redirect:questionList";
 	}
 }

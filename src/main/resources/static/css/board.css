@@ -1,0 +1,35 @@
+@charset "UTF-8";
+
+th.board_title {
+	background-color: #7D8F69;
+	border:1px solid #ffffff;
+	font-size: 20px;
+	color: #ffffff;
+	font-family: malgun;
+	font-weight: bold;
+
+	
+}
+
+td.board_content01 {
+	background-color: #E6E5A3;
+	
+	border-bottom: 5px solid #ffffff;
+	font-size: 20px;
+	color: #798e6a;
+	font-family: malgun;
+	font-weight: bold;
+	text-align: center;
+	
+}
+
+td.board_content02 {
+	background-color: #E6E5A3;
+	border-bottom: 5px solid #ffffff;
+	font-size: 20px;
+	color: #7D8F69;
+	font-family: malgun;
+	font-weight: bold;
+	text-align: left;
+	
+}

@@ -22,4 +22,23 @@
 	<update id="memberModifyDao">
 		UPDATE profile_member SET mpw=#{param2}, mname=#{param3}, memail=#{param4}  WHERE mid=#{param1} 
 	</update>
+
+	<!-- 게시판관리  -->	
+	<insert id="writeQuestionDao">
+		INSERT INTO profile_board (qnum, qid, qname, qcontent,qemail)
+		VALUES (profile_seq.nextval, #{param1},#{param2},#{param3},#{param4})
+	</insert>
+	<select id="boardListDao" resultType="com.sdhcompany.home.Dto.QBoardDto">
+		SELECT * FROM profile_board ORDER BY qnum DESC
+	</select>
+	<select id="boardViewDao" resultType="com.sdhcompany.home.Dto.QBoardDto">
+		SELECT * FROM profile_board WHERE qnum=#{param1}
+	</select>
+	<update id="modifyDao">
+		UPDATE profile_board SET qcontent=#{param2} WHERE qnum=#{param1}
+	</update>
+	<delete id="deletedao">
+		DELETE profile_board WHERE qnum=#{param1}
+	</delete>
+	
 </mapper>
