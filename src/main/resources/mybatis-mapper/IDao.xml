@@ -5,16 +5,21 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
    
 <mapper namespace="com.sdhcompany.home.Dao.IDao">
+	
+	<!-- 회원관리  -->
 	<insert id="memberJoinDao">
 		INSERT INTO profile_member(mid,mpw,mname,memail) VALUES (#{param1},#{param2},#{param3},#{param4}) 
 	</insert>
-	<select id="checkIdDao" resultType="com.sdhcompany.home.Dto.MemberDto">
+	<select id="checkIdDao" resultType="int">
 		SELECT COUNT(*) FROM profile_member WHERE mid=#{param1}
 	</select>
-	<select id="loginOkDao" resultType="com.sdhcompany.home.Dto.MemberDto">
-		SELECT COUNT(*) FROM profile_member WHERE mid=#{param1} and mpw=#{param2}
+	<select id="checkIdPwDao" resultType="int">
+		SELECT COUNT(*) FROM profile_member WHERE mid=#{param1} AND mpw=#{param2}
 	</select>
-	<select id="memberNameDaoo" resultType="com.sdhcompany.home.Dto.MemberDto">
-		SELECT * FROM profile_member where mid=#{param1}
+	<select id="getMemberInfoDao" resultType="com.sdhcompany.home.Dto.MemberDto">
+		SELECT * FROM profile_member WHERE mid=#{param1}
 	</select>
+	<update id="memberModifyDao">
+		UPDATE profile_member SET mpw=#{param2}, mname=#{param3}, memail=#{param4}  WHERE mid=#{param1} 
+	</update>
 </mapper>

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.sdhcompany.home.Dao.IDao;
 import com.sdhcompany.home.Dto.MemberDto;
 
+import oracle.net.aso.m;
+
 @Controller
 public class HomeController {
 	
@@ -51,7 +53,17 @@ public class HomeController {
 		return "join";
 	}
 	@RequestMapping(value = "/question")
-	public String question() {
+	public String question(HttpSession session,Model model) {
+		
+		String sessionId = (String) session.getAttribute("memberId");
+		
+		if(sessionId == null) { //로그인 상태확인
+			
+			model.addAttribute("memberId", "GUEST");
+		} else {
+			model.addAttribute("memberId", sessionId);
+		}
+		
 		
 		return "question";
 	}
@@ -87,22 +99,27 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/loginOk")
-	public String loginOk(HttpServletRequest request, HttpSession session) {
+	public String loginOk(HttpServletRequest request, HttpSession session, Model model) {
 		IDao dao = sqlSession.getMapper(IDao.class);
 		String mid = request.getParameter("mid");
 		String mpw = request.getParameter("mpw");
 		
-		int checkFlag = dao.checkIdPwDao(mid, mpw);
-			
-		if(checkFlag == 1) {
+		int checkIdFlag = dao.checkIdDao(mid);
+		//로그인하려는 아이디 존재시 1, 로그인하려는 아이디가 존재하지 않으면 0이 반환
+		int checkIdPwFlag = dao.checkIdPwDao(mid, mpw);
+		//로그인하려는 아이디와 비밀번호가 모두 일치하는 데이터가 존재하면 1 아니면 0
+		
+		model.addAttribute("checkIdFlag", checkIdFlag);
+		model.addAttribute("checkIdPwFlag", checkIdPwFlag);
+		
+		if(checkIdPwFlag==1) { //로그인실행
 			session.setAttribute("memberId", mid);
-			String cid=(String) session.getAttribute("memberId");
-			MemberDto dto = dao.memberNameDao(cid);
-			session.setAttribute("memberName", dto.getMname());
+			MemberDto memberDto= dao.getMemberInfoDao(mid);
+			
+			model.addAttribute("memberDto", memberDto);
+			model.addAttribute("mid", mid);
+			
 		}
-		
-		
-		
 		
 		return "loginOk";
 	}
@@ -113,5 +130,39 @@ public class HomeController {
 		session.invalidate();
 				
 		return "login";
+	}
+	
+	
+	@RequestMapping(value = "/memberModify")
+	public String memberModify(HttpServletRequest request, Model model, HttpSession session) {
+		
+		String sessionId = (String) session.getAttribute("memberId");
+
+		IDao dao = sqlSession.getMapper(IDao.class);
+		
+		MemberDto memberDto = dao.getMemberInfoDao(sessionId);
+		
+		model.addAttribute("memberDto", memberDto);
+		return "memberModify";
+		
+		}
+	
+	@RequestMapping(value = "/memberModifyOk")
+	public String memberModifyOk(HttpServletRequest request,Model model) {
+		 
+		String mid = request.getParameter("mid");
+		String mpw = request.getParameter("mpw");
+		String mname = request.getParameter("mname");
+		String memail = request.getParameter("memail");
+		
+		IDao dao = sqlSession.getMapper(IDao.class);
+		
+		dao.memberModifyDao(mid, mpw, mname, memail);
+		
+		MemberDto memberDto = dao.getMemberInfoDao(mid);
+		model.addAttribute("memberDto", memberDto);
+		
+		return "memberModifyOk";
+		
 	}
 }

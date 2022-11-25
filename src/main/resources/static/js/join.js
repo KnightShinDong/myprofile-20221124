@@ -9,9 +9,6 @@
 		return;
 	}
 	
-	
-	
-	
 	if(document.join_frm.mpw.value.length == 0){
 		alert("비밀번호는 필수 입력사항입니다. 다시 확인해주세요!");
 		return;

@@ -11,6 +11,7 @@
 <body>
 	<% 
 		String sessionId = (String)session.getAttribute("memberId");
+		String sessionName = (String)session.getAttribute("memberName");
 	%>
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 		<tr class="headline01">

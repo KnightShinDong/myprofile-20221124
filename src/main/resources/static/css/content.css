@@ -33,13 +33,27 @@ input.input_type01 {
 input.button_type01 {
 	background-color: #7D8F69;
 	border: 2px solid #ffffff;
-	width: 195px;
+	width: 190px;
 	height: 40px;
 	font-family: Arial;
 	font-size: 15px;
 	color: 	#ffffff;
 	padding: 5px;
 	font-weight: bold;
+	cursor:pointer;
+}
+
+input.button_type01:hover {
+	background-color: #709861;
+	border: 2px solid #ffffff;
+	width: 190px;
+	height: 40px;
+	font-family: Arial;
+	font-size: 15px;
+	color: 	#ffffff;
+	padding: 5px;
+	font-weight: bold;
+
 }
 
 textarea.textarea_type01 {

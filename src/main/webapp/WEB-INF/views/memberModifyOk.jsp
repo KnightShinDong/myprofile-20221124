@@ -4,12 +4,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>question.jsp</title>
 
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/title.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/content.css">
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/board.js"></script>
 
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/join.js"></script>
+<!-- 자바 js파일 부르기 -->
+
+<title>modify.jsp</title>
 </head>
 <body>
 	<%@ include file="include/header.jsp" %>
@@ -33,30 +35,34 @@
 						<td class="content">
 						<center>
 							<table border="0" cellspacing="0" cellpadding="10">
-								<form action="questionOk" method="post" name="board_frm">
+									<tr>
+										<td colspan="2" align="center">회원 정보 수정 완료</td>
+									</tr>
 									<tr>
 										<td><span class="content_text01">MEMBER ID </span> </td>
-										<td><input class="input_type01" type="text" name="qid" value="${memberId }" readonly="readonly"> </td>
+										<td>${memberDto.mid }</td>
 									</tr>
 									<tr>
-										<td><span class="content_text01">NAME</span></td>
-										<td><input class="input_type01" type="text" name="qname"> </td>
+										<td><span class="content_text01">PASSWORD </span></td>
+										<td>${memberDto.mpw } </td>
 									</tr>
+									
 									<tr>
-										<td><span class="content_text01">QUESTION </span></td>
-										<td><textArea class=""textarea_type01" rows="10" cols="35" name="qcontent"></textArea></td>
+										<td><span class="content_text01">NAME </span></td>
+										<td>${memberDto.mname}</td>
 									</tr>
 									<tr>
 										<td><span class="content_text01">E-MEMAIL </span></td>
-										<td><input class="input_type01" type="text" name="qemail"> </td>
+										<td> ${memberDto.memail}</td>
 									</tr>
 									<tr>
 										<td colspan="2">
-											<input class="button_type01" type="button" value="질문하기" onclick="boardCheck()">&nbsp;&nbsp;
-											<input class="button_type01" type="button" value="글목록" onclick="script:window.location='list'">
+											<input class="button_type01" type="button" value="정보수정" onclick="script:window.location='memberModify'">&nbsp;&nbsp;
+										
+											<input class="button_type01" type="button" value="수정취소" onclick="script:window.location='index'">
 										</td>
 									</tr>
-								</form>
+								
 							</table>
 							</center>
 						</td>
