@@ -3,6 +3,7 @@ package com.sdhcompany.home.Dao;
 
 import java.util.ArrayList;
 
+import com.sdhcompany.home.Dto.Criteria;
 import com.sdhcompany.home.Dto.MemberDto;
 import com.sdhcompany.home.Dto.QBoardDto;
 
@@ -18,8 +19,12 @@ public interface IDao {
 	
 	//게시판관련
 	public void writeQuestionDao( String qid, String qname, String qcontent, String qemail);
-	public ArrayList<QBoardDto> boardListDao();
+	public ArrayList<QBoardDto> boardListDao(Criteria cri);
 	public QBoardDto boardViewDao(String qnum);
 	public void modifyDao(String qnum, String content);
 	public void deletedao(String qnum);
+	
+	//게시판 페이징 관련
+	//게시판 총 글의 개수 가져오기
+	public int boardAllCount();
 }

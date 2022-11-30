@@ -13,7 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.sdhcompany.home.Dao.IDao;
+import com.sdhcompany.home.Dto.Criteria;
 import com.sdhcompany.home.Dto.MemberDto;
+import com.sdhcompany.home.Dto.PageDto;
 import com.sdhcompany.home.Dto.QBoardDto;
 
 import oracle.net.aso.m;
@@ -188,11 +190,36 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "questionList")
-	public String list(HttpServletRequest request, Model model) {
+	public String list(HttpServletRequest request, Model model, Criteria cri) {
+		
+		int pageNumInt= 0;
+		if(request.getParameter("pageNum") == null) {
+			pageNumInt = 1;
+			cri.setPageNum(pageNumInt);
+			
+		} else {
+			pageNumInt = Integer.parseInt(request.getParameter("pageNum"));
+		//처음 넘어온 값이 null값이라  if문사용
+			cri.setPageNum(pageNumInt);
+		}
 		
 		IDao dao = sqlSession.getMapper(IDao.class);
 		
-		ArrayList<QBoardDto> boardDtos =  dao.boardListDao();
+		//페이징관련
+		int totalRecord = dao.boardAllCount(); 
+		
+		// cri.setPageNum(totalRecord);
+		cri.setStartNum(cri.getPageNum()-1 * cri.getAmount());
+		//크리객체에 스타트넘 공식 -- 해당 페이지의 시작번호를 설정
+		
+		PageDto pageDto = new PageDto(cri, totalRecord);
+		
+		
+		//리스트관련
+		ArrayList<QBoardDto> boardDtos =  dao.boardListDao(cri);
+		
+		model.addAttribute("pageMaker", pageDto);//페이징관련
+		model.addAttribute("currPage", pageNumInt);
 		
 		model.addAttribute("boardDtos", boardDtos);
 		
@@ -247,4 +274,7 @@ public class HomeController {
 		
 		return "redirect:questionList";
 	}
+	
+	
+	
 }
